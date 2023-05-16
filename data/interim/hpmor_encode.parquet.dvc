@@ -1,0 +1,4 @@
+outs:
+- md5: 1b4977d96986973e55998e87d12643f1
+  size: 4928572
+  path: hpmor_encode.parquet
