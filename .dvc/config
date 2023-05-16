@@ -1,0 +1,9 @@
+[core]
+    remote = remote
+    autostage = false
+
+['remote "remote"']
+    url = s3://482c06eb-6af19abf-42ef-43ab-9666-90d82e3b14fd
+    endpointurl = https://s3.timeweb.com
+    access_key_id = cz41719
+    secret_access_key = 3aa850da2e24eff07eba59818478000b
