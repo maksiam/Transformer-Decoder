@@ -3,6 +3,7 @@ import ebooklib
 from ebooklib import epub
 from bs4 import BeautifulSoup
 import pandas as pd
+import click
 
 
 def chapter_to_str(chapter: str) -> str:
@@ -19,9 +20,12 @@ def chapter_to_str(chapter: str) -> str:
     return " ".join(text)
 
 
-def main():
+@click.command()
+@click.argument("input_filepath", type=click.Path(exists=True))
+@click.argument("output_filepath", type=click.Path())
+def main(input_filepath: str, output_filepath: str):
     """Runs data processing scripts to turn epub book into parquet file DataFrame with text"""
-    book = epub.read_epub(r"data\raw\hpmor_ru.epub")
+    book = epub.read_epub(input_filepath)
     # get list of documents objects
     items = list(book.get_items_of_type(ebooklib.ITEM_DOCUMENT))
     texts = {}
@@ -29,7 +33,7 @@ def main():
         texts[c.get_name()] = chapter_to_str(c)
     df = pd.DataFrame(texts, index=["text"]).T
     df = df.iloc[3:-1]
-    df.to_parquet(r"data\raw\hpmor_raw.parquet")
+    df.to_parquet(output_filepath)
 
 
 if __name__ == "__main__":
