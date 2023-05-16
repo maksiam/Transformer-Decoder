@@ -28,6 +28,7 @@ def main():
     for c in items:
         texts[c.get_name()] = chapter_to_str(c)
     df = pd.DataFrame(texts, index=["text"]).T
+    df = df.iloc[3:-1]
     df.to_parquet(r"data\raw\hpmor_raw.parquet")
 
 
