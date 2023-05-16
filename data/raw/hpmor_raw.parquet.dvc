@@ -1,0 +1,4 @@
+outs:
+- md5: 0f37cf27f8f658e5555d67b38661963e
+  size: 3230188
+  path: hpmor_raw.parquet
