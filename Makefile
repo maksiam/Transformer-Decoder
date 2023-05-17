@@ -26,8 +26,9 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 
 ## Make Dataset
-data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+data:
+	$(PYTHON_INTERPRETER) src/data/data_extraction.py data/raw/hpmor_ru.epub data/raw/hpmor_raw.parquet
+	$(PYTHON_INTERPRETER) src/features/data_tokenize.py data/raw/hpmor_raw.parquet data/interim/hpmor_encode.parquet
 
 ## Delete all compiled Python files
 clean:
