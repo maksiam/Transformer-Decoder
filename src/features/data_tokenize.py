@@ -22,8 +22,9 @@ def main(input_filepath: str, output_filepath: str):
     encodes = []
     for paragraph in df.text:
         encodes.append(tokenizer.encode(paragraph, add_special_tokens=False))
-    df['encode'] = encodes
+    df["encode"] = encodes
     df.to_parquet(output_filepath)
+
 
 if __name__ == "__main__":
     main()
