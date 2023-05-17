@@ -20,6 +20,7 @@ fastparquet = "^2023.4.0"
 transformers = "^4.29.1"
 dvc = "^2.56.0"
 dvc-s3 = "^2.22.0"
+torch = "^2.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
