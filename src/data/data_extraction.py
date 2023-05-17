@@ -25,6 +25,7 @@ def chapter_to_str(chapter: str) -> str:
 @click.argument("output_filepath", type=click.Path())
 def main(input_filepath: str, output_filepath: str):
     """Runs data processing scripts to turn epub book into parquet file DataFrame with text"""
+    print('Start data extraction\n')
     book = epub.read_epub(input_filepath)
     # get list of documents objects
     items = list(book.get_items_of_type(ebooklib.ITEM_DOCUMENT))
@@ -34,6 +35,7 @@ def main(input_filepath: str, output_filepath: str):
     df = pd.DataFrame(texts, index=["text"]).T
     df = df.iloc[3:-1]
     df.to_parquet(output_filepath)
+    print('Finish data extraction\n')
 
 
 if __name__ == "__main__":

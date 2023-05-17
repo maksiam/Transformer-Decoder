@@ -14,6 +14,7 @@ def main(input_filepath: str, output_filepath: str):
         input_filepath (str): path to DataFrame with raw text
         output_filepath (str): path for saving DataFrame with tokenized data
     """
+    print('Start tokenizations\n')
     df = pd.read_parquet(input_filepath)
     # loading tokenizer model
     model_name_or_path = "sberbank-ai/rugpt3large_based_on_gpt2"
@@ -24,7 +25,9 @@ def main(input_filepath: str, output_filepath: str):
         encodes.append(tokenizer.encode(paragraph, add_special_tokens=False))
     df["encode"] = encodes
     df.to_parquet(output_filepath)
+    print('Finish tokenization\n')
 
 
 if __name__ == "__main__":
     main()
+    
