@@ -4,6 +4,8 @@ from ebooklib import epub
 from bs4 import BeautifulSoup
 import pandas as pd
 import click
+import os
+from PyPDF2 import PdfReader
 
 
 def chapter_to_str(chapter: str) -> str:
@@ -24,18 +26,39 @@ def chapter_to_str(chapter: str) -> str:
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.argument("output_filepath", type=click.Path())
 def main(input_filepath: str, output_filepath: str):
-    """Runs data processing scripts to turn epub book into parquet file DataFrame with text"""
-    print('Start data extraction\n')
-    book = epub.read_epub(input_filepath)
+    """Runs data processing scripts to turn epub and pdf books into parquet file DataFrame with text"""
+    print("Start data extraction\n")
+    hpmor = "hpmor_ru.epub"
+    book = epub.read_epub(input_filepath + hpmor)
     # get list of documents objects
     items = list(book.get_items_of_type(ebooklib.ITEM_DOCUMENT))
     texts = {}
     for c in items:
         texts[c.get_name()] = chapter_to_str(c)
-    df = pd.DataFrame(texts, index=["text"]).T
-    df = df.iloc[3:-1]
+    df = pd.DataFrame({"hpmor": " ".join(texts.values())}, index=["text"]).T
+    # folder path
+    hp_orig = "hp_original"
+    dir_path = input_filepath + hp_orig +'\\'
+
+    # list file and directories
+    books = os.listdir(dir_path)
+    hp = {title: [] for title in books}
+    for title in books:
+        print(f"Reading {title}")
+        # creating a pdf reader object
+        reader = PdfReader(dir_path + title)
+
+        # printing number of pages in pdf file
+        print(f"Number of pages: {len(reader.pages)}")
+        temp = []
+        for page in reader.pages:
+            text = page.extract_text()
+            text = " ".join(text.split())
+            temp.append(text)
+        hp[title] = "\n".join(temp)
+    df = pd.concat([df, pd.DataFrame(hp, index=["text"]).T], axis=0)
     df.to_parquet(output_filepath)
-    print('Finish data extraction\n')
+    print("Finish data extraction\n")
 
 
 if __name__ == "__main__":
