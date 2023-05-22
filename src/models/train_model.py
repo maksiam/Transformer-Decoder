@@ -29,7 +29,7 @@ from utils import (
 # print(decode(vocab=vocab, enc_sec=enc_sec))
 
 # raw data
-path_do_data = r"data\raw\hpmor_raw.parquet"
+path_do_data = r"data\raw\hp_raw.parquet"
 df = pd.read_parquet(path_do_data)
 data_raw = " ".join(df.text)
 # we use pretrained tokenizer for performance improvements
