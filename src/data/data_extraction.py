@@ -28,14 +28,23 @@ def chapter_to_str(chapter: str) -> str:
 def main(input_filepath: str, output_filepath: str):
     """Runs data processing scripts to turn epub and pdf books into parquet file DataFrame with text"""
     print("Start data extraction\n")
-    hpmor = "hpmor_ru.epub"
-    book = epub.read_epub(input_filepath + hpmor)
-    # get list of documents objects
-    items = list(book.get_items_of_type(ebooklib.ITEM_DOCUMENT))
-    texts = {}
-    for c in items:
-        texts[c.get_name()] = chapter_to_str(c)
-    df = pd.DataFrame({"hpmor": " ".join(texts.values())}, index=["text"]).T
+    # folder path
+    hp_funfic = "hp_funfic"
+    dir_path = input_filepath + hp_funfic +'\\'
+
+    # list file and directories
+    books = os.listdir(dir_path)
+    epub_dics = {title: [] for title in books}
+    
+    for title in books:
+        book = epub.read_epub(dir_path + title)
+        # get list of documents objects
+        items = list(book.get_items_of_type(ebooklib.ITEM_DOCUMENT))
+        for c in items:
+            epub_dics[title].append(chapter_to_str(c))
+        epub_dics[title] = " ".join(epub_dics[title])
+    
+    df = pd.DataFrame(epub_dics, index = ['text']).T
     # folder path
     hp_orig = "hp_original"
     dir_path = input_filepath + hp_orig +'\\'
