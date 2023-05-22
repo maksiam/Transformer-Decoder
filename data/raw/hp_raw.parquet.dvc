@@ -1,0 +1,4 @@
+outs:
+- md5: cb386733693400cdfd79d56858d25cf2
+  size: 8868660
+  path: hp_raw.parquet

@@ -27,8 +27,8 @@ requirements: test_environment
 
 ## Make Dataset
 data:
-	$(PYTHON_INTERPRETER) src/data/data_extraction.py data/raw/hpmor_ru.epub data/raw/hpmor_raw.parquet
-	$(PYTHON_INTERPRETER) src/features/data_tokenize.py data/raw/hpmor_raw.parquet data/interim/hpmor_encode.parquet
+	$(PYTHON_INTERPRETER) src/data/data_extraction.py data/raw/ data/raw/hp_raw.parquet
+	$(PYTHON_INTERPRETER) src/features/data_tokenize.py data/raw/hp_raw.parquet data/interim/hp_encode.parquet
 
 ## Delete all compiled Python files
 clean:

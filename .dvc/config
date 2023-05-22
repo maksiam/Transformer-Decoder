@@ -1,7 +1,8 @@
 [core]
     remote = remote
     autostage = false
-
+[cache]
+    type = copy
 ['remote "remote"']
     url = s3://482c06eb-6af19abf-42ef-43ab-9666-90d82e3b14fd
     endpointurl = https://s3.timeweb.com
