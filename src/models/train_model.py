@@ -21,13 +21,6 @@ from utils import (
     estimate_loss,
 )
 
-# load model from checkpoint
-# m = load_model_from_checkpoint(Transformer,vocab_size=vocab_size)
-
-# example to decode sequence
-# enc_sec = m.generate(idx=torch.zeros((1,1), dtype=torch.long),
-# max_new_tokens=20)[0].tolist()
-# print(decode(vocab=vocab, enc_sec=enc_sec))
 
 mlflow.set_tracking_uri("http://188.225.84.65:5000")
 mlflow.set_experiment("transformer_decoder")
