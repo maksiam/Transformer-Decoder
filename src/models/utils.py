@@ -4,15 +4,15 @@ from datetime import datetime
 
 # hyperparameters
 BATCH_SIZE = 32  # how many independent sequences will we process in parallel?
-BLOCK_SIZE = 64  # what is the maximum context length for predictions?
+BLOCK_SIZE = 128  # what is the maximum context length for predictions?
 MAX_ITER = 5000  # number of training iterations
 EVAL_INTER = 500
 LEARNING_RATE = 3e-4
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-NUM_HEAD = 6
+NUM_HEAD = 8
 NUM_EMBED = NUM_HEAD * 128
-NUM_LAYER = 6
-DROPOUT = 0.2
+NUM_LAYER = 8
+DROPOUT = 0.3
 
 
 def encode(text_seq: str, tokenizer: any) -> torch.Tensor:
@@ -87,18 +87,17 @@ def estimate_loss(
 
 def load_model_from_checkpoint(
     model_class: torch.nn.Module,
-    path_to_checkpoint: str = "checkpoints/state_dict_model.pt",
+    path_to_checkpoint: str = "models\model.pt",
     **kwargs: dict,
 ) -> torch.nn.Module:
     try:
-        state_dict = torch.load(path_to_checkpoint)
+        state_dict = torch.load(path_to_checkpoint, map_location=torch.device('cpu'))
         print("Successfully loaded model from the checkpoint")
     except Exception as e:
         print(f"Error loading the model from the checkpoint. {e}")
-
     model = model_class(**kwargs)
     # load the state_dict into the model
-    model.load_state_dict(state_dict)
+    model.load_state_dict(state_dict, strict=False)
     return model
 
 
