@@ -21,11 +21,27 @@ from utils import (
     estimate_loss,
 )
 
+params = {"BATCH_SIZE":BATCH_SIZE,
+    "BLOCK_SIZE":BLOCK_SIZE,
+    "DEVICE":DEVICE,
+    "DROPOUT":DROPOUT,
+    "LEARNING_RATE":LEARNING_RATE,
+    "NUM_EMBED":NUM_EMBED,
+    "NUM_HEAD":NUM_HEAD,
+    "NUM_LAYER":NUM_LAYER,
+    "MAX_ITER":MAX_ITER,
+    "EVAL_INTER":EVAL_INTER,
+    "encode":encode,
+    "decode":decode,
+    "get_batch":get_batch,
+    "save_model_to_chekpoint":save_model_to_chekpoint,
+    "estimate_loss":estimate_loss}
 
 mlflow.set_tracking_uri("http://188.225.84.65:5000")
 mlflow.set_experiment("transformer_decoder")
 mlflow.pytorch.autolog()
 with mlflow.start_run():
+    mlflow.log_params(params)
     # raw data
     path_do_data = r"data/raw/hp_raw.parquet"
     df = pd.read_parquet(path_do_data)
@@ -78,7 +94,8 @@ with mlflow.start_run():
                     step, loss_train, loss_val
                 )
             )
-
+        mlflow.log_metric('train loss', loss_train)
+        mlflow.log_metric('val loss', loss_val)
         # sample a batch of data
         xb, yb = get_batch(
             data=train_data, block_size=BLOCK_SIZE, batch_size=BATCH_SIZE
