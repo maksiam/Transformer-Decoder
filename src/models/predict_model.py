@@ -10,6 +10,8 @@ from utils import (
     NUM_HEAD,
     NUM_LAYER,
     DROPOUT,
+    encode,
+    BATCH_SIZE,
 )
 
 model_name_or_path = "sberbank-ai/rugpt3large_based_on_gpt2"
@@ -26,8 +28,24 @@ m = load_model_from_checkpoint(
     dropout=DROPOUT,
 )
 
+text = "В Литтл-Хэнглтоне по-прежнему зовут его Домом Реддлов,"
+data = encode(text_seq=text, tokenizer=tokenizer)
+ix = torch.arange(len(data) - 1, 0, -BLOCK_SIZE, dtype=int)
+ix = torch.flip(ix,[0])
+
+
+# print(data)
+# print(ix)
+
+# we stack batch_size rows of sentences
+# so x and y are the matrices with rows_num=batch_size
+# and col_num=block_size
+x = torch.stack([data[-BLOCK_SIZE::]])
 # example to decode sequence
-context = torch.zeros((1, 1), dtype=torch.long, device=DEVICE)
+# context = torch.zeros((1, 1), dtype=torch.long, device=DEVICE)
+context = x.to(DEVICE)
+# print(context)
+# print(context.shape)
 print(
     decode(
         enc_sec=m.generate(idx=context, max_new_tokens=100, block_size=BLOCK_SIZE)[0],
