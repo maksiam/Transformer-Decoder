@@ -91,10 +91,11 @@ def load_model_from_checkpoint(
     **kwargs: dict,
 ) -> torch.nn.Module:
     try:
-        state_dict = torch.load(path_to_checkpoint, map_location=torch.device('cpu'))
+        state_dict = torch.load(path_to_checkpoint, map_location=torch.device("cpu"))
         print("Successfully loaded model from the checkpoint")
     except Exception as e:
         print(f"Error loading the model from the checkpoint. {e}")
+        return None
     model = model_class(**kwargs)
     # load the state_dict into the model
     model.load_state_dict(state_dict, strict=False)
