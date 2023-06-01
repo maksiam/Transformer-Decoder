@@ -30,7 +30,7 @@ def main(input_filepath: str, output_filepath: str):
     print("Start data extraction\n")
     # folder path
     hp_funfic = "hp_funfic"
-    dir_path = input_filepath + hp_funfic +'\\'
+    dir_path = input_filepath + hp_funfic +'/'
 
     # list file and directories
     books = os.listdir(dir_path)
@@ -47,7 +47,7 @@ def main(input_filepath: str, output_filepath: str):
     df = pd.DataFrame(epub_dics, index = ['text']).T
     # folder path
     hp_orig = "hp_original"
-    dir_path = input_filepath + hp_orig +'\\'
+    dir_path = input_filepath + hp_orig +'/'
 
     # list file and directories
     books = os.listdir(dir_path)
