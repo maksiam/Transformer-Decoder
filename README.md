@@ -49,5 +49,41 @@ Project Organization
 
 
 --------
+# Установка проекта  
+Клонируем репозиторий и переходим в него
+```shell
+git clone https://github.com/maksiam/Transformer-Decoder
+cd Transformer-Decoder
+```
+Устанавливаем библиотеку Poetry
+```shell
+pip install poetry
+```
+Указываем путь для создания виртуальной среды, заменяем path/for/venv (можно не указывать, тогда расположится по дефолту)
+```shell
+poetry config virtualenvs.path path/for/venv
+```
+Устанавливаем зависимости
+```shell
+poetry install
+```
+Переходим в shell виртуальной среды
+```shell
+poetry shell
+```
+Устанавливаем все данные с помощью dvc из S3-хранилища (ВНИМАНИЕ! Модель может занимать около 1Гб места)
+```shell
+dvc pull
+```
+# Генерация текста
+Запускаем файл predict_model.py, передаем на вход аргументы: начало предложения, количество токенов для генерации, путь до модели
+```shell
+python src\models\predict_model.py "Гарри Поттер вошел в комнату и " 100 "models\model.pt"
+```
+Пример вывода
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+# Обучение модели
+Запускаем файл train_model.py, который забирает параметры модели из файла src\models\utils.py
+```shell
+python src\models\train_model.py
+```
