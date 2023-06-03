@@ -81,6 +81,7 @@ dvc pull
 python src\models\predict_model.py "Гарри Поттер вошел в комнату и " 100 "models\model.pt"
 ```
 Пример вывода
+![generator example](generator_example.png)
 
 # Обучение модели
 Запускаем файл train_model.py, который забирает параметры модели из файла src\models\utils.py
