@@ -1,7 +1,7 @@
 Transformer-Decoder
 ==============================
 
-A short description of the project.
+Transformer-Decoder модель для генерации текста похожего на книги о Гарри Поттере.
 
 Project Organization
 ------------
