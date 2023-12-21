@@ -20,6 +20,16 @@ from utils import (
     save_model_to_chekpoint,
     estimate_loss,
 )
+assert BATCH_SIZE > 0, "Wrong batch size"
+assert BLOCK_SIZE > 0, "Wrong BLOCK_SIZE"
+assert LEARNING_RATE > 0, "Wrong LEARNING_RATE"
+assert DROPOUT > 0 and DROPOUT < 1, "Wrong DROPOUT"
+assert NUM_EMBED > 0, "Wrong NUM_EMBED"
+assert NUM_LAYER > 0, "Wrong NUM_LAYER"
+assert MAX_ITER > 0, "Wrong MAX_ITER"
+assert EVAL_INTER > 0, "Wrong EVAL_INTER"
+assert DEVICE == 'cuda' or DEVICE == 'cpu', "Wrong DEVICE"
+
 
 params = {"BATCH_SIZE":BATCH_SIZE,
     "BLOCK_SIZE":BLOCK_SIZE,
