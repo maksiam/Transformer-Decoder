@@ -23,6 +23,7 @@ def main(text: str, max_new_tokens: int, path_to_model: str):
     model_name_or_path = "sberbank-ai/rugpt3large_based_on_gpt2"
     tokenizer = GPT2Tokenizer.from_pretrained(model_name_or_path)
     vocab_size = tokenizer.vocab_size
+    assert path_to_model.split('.')[-1] == "pt", "Wrong model extension"
     # load model from checkpoint
     m = load_model_from_checkpoint(
         Transformer,
